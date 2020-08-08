@@ -2,7 +2,7 @@
 
 Muca muca;
 
-#define CALIBRATION_STEPS 20
+#define CALIBRATION_STEPS 50
 short currentCalibrationStep = 0;
 unsigned int calibrationGrid[NUM_ROWS * NUM_COLUMNS];
 
@@ -32,15 +32,16 @@ void GetRaw() {
             Serial.println();
         }
         else {  // Once the calibration is done
-                //Save the grid value to the calibration array
+                // Save the grid value to the calibration array
+            const float SR = 0.2; // smooth ratio
             for (int i = 0; i < NUM_ROWS * NUM_COLUMNS; i++) {
                 if (currentCalibrationStep == 0)        // Copy array:
                     calibrationGrid[i] = muca.grid[i];
                 else                                    // Get average:
-                    calibrationGrid[i] = (calibrationGrid[i] + muca.grid[i]) / 2;
+                    calibrationGrid[i] = SR * calibrationGrid[i] + (1 - SR) * muca.grid[i];
             }
             currentCalibrationStep++;
-            Serial.print("Calibration performed ");
+            Serial.print("Calibration step: ");
             Serial.print(currentCalibrationStep);
             Serial.print("/");
             Serial.println(CALIBRATION_STEPS);
