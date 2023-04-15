@@ -9,9 +9,13 @@ unsigned int calibrationGrid[NUM_ROWS * NUM_COLUMNS];
 void setup() {
     Serial.begin(115200);
 
+    // We only use 10 x 6 electrodes for this demo:
+    muca.skipLine(TX_lines, (const short[]) {/*1,2,3,4,5,6,7,8,9,10,11,*/12,13,14,15,16,17,18,19,20,21}, 10);
+    muca.skipLine(RX_lines, (const short[]) {1,2,3,4,5,6/*,7,8,9,10,11,12*/}, 6);
+
     muca.init();
     muca.useRawData(true); // If you use the raw data, the interrupt is not working
-    muca.setGain(255);
+    muca.setGain(31);
 }
 
 void loop() {

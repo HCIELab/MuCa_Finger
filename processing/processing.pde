@@ -16,8 +16,8 @@ int     SKIN_CELLS         = SKIN_COLS * SKIN_ROWS;
 int     PHYSICAL_W         = 115; // mm
 int     PHYSICAL_H         = 175; // mm
 
-int     DISPLAY_W          = 650;
-int     DISPLAY_H          = 700;
+int     DISPLAY_W          = 600;
+int     DISPLAY_H          = 900;
 
 int     SERIAL_PORT        = 0;
 int     SERIAL_RATE        = 115200;
@@ -62,18 +62,17 @@ private PImage destImg;
 
 // =========== Threshold settings ==================
 boolean autoThreshold = false; //  Auto threshold is not working well when there are skipped lines
-int thresholdMin = 33;
-int thresholdMax = 255;
+int thresholdMin = 0;
+int thresholdMax = 15;
 int gainValue = 31;
 
 
 // Visual settings
 
-
-int resizeFactor = 30;
+int resizeFactor = 100;
 
 // Computer vision settings
-int imgageProcessing = 4; // 0 INTER_NEAREST // 1 INTER_LINEAR  // 2 INTER_CUBIC  // 3 INTER_AREA  // 4 INTER_LANCZOS4
+int imgageProcessing = 2; // 0 INTER_NEAREST // 1 INTER_LINEAR  // 2 INTER_CUBIC  // 3 INTER_AREA  // 4 INTER_LANCZOS4
 
 
 // Blob detection settings
@@ -109,12 +108,12 @@ void setup () {
 
 void draw() {
   readSkinBuffer();
-  background(200);
+  background(0);
   if ( skinDataValid ) {
     treatSkinData();
     performCV();
     pushMatrix();
-    translate(30, 30);
+    //translate(30, 30);
     drawCV();
     if (enableBlobDetection) drawBlobs();
     popMatrix();
